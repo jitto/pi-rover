@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+import RPi.GPIO as GPIO
+<body>
+
+<h1></h1>
+
+<p><html>
+<title>D-Pad.com</title>
+<body>
+<table>
+<tr>
+  <td></td>
+  <td><button id = "button1" onclick='moveRover("forward")'>FORWARD</button></td>
+  <td></td>
+</tr>
+<tr>
+  <td><button id = "button2" onclick='moveRover("left")'>...LEFT...</button></td>
+  <td><button id = "button3" onclick='moveRover("stop")'>...STOP...</button></td>
+  <td><button id = "button4" onclick='moveRover("right")'>...RIGHT...</button></td>
+</tr>
+<tr>
+  <td></td>
+  <td><button id = "button5" onclick='moveRover("backward")'>BACKWARD</button></td>
+  <td></td>
+</tr>
+</table>
+<div id = "div1"></div>
+</body>
+<script language=javascript>
+ 
+ function moveRover(direction){
+ xmlhttp = new XMLHttpRequest();
+  xmlhttp.open("GET","rover/" + direction);
+  xmlhttp.send();
+ 
+ }
+</script>
+</html><html>
