@@ -7,16 +7,16 @@ class MyHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
   def motorTurn(self, pin8, pin10, pin16, pin18):
     GPIO.output(16,pin16)
     GPIO.output(18, pin18)
-    GPIO.output(8,pin8)
-    GPIO.output(10, pin10)
+    GPIO.output(11,pin8)
+    GPIO.output(15, pin10)
       
   def __init__(self, request, client_address, server):
     SimpleHTTPServer.SimpleHTTPRequestHandler.__init__(self, request, client_address, server)
     GPIO.setmode(GPIO.BOARD)
     GPIO.setup(16, GPIO.OUT)
     GPIO.setup(18, GPIO.OUT)
-    GPIO.setup(8, GPIO.OUT)
-    GPIO.setup(10, GPIO.OUT)
+    GPIO.setup(11, GPIO.OUT)
+    GPIO.setup(15, GPIO.OUT)
   
   def do_GET(self):
 
