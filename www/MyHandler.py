@@ -17,6 +17,9 @@ class MyHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
     GPIO.setup(18, GPIO.OUT)
     GPIO.setup(11, GPIO.OUT)
     GPIO.setup(15, GPIO.OUT)
+    motorTurn(True, False, True, False)
+    time.sleep(.1)
+    motorTurn(False, False, False, False)
   
   def do_GET(self):
 
@@ -37,8 +40,12 @@ class MyHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
       self.motorTurn(False, True, False, True)
     elif ( 'left' in self.path ):
       self.motorTurn(False, True, True, False)
+      time.sleep(.1)
+      self.motorTurn(True, False, True, False)
     elif ( 'right' in self.path):
       self.motorTurn(True, False, False, True)
+      time.sleep(.1)
+      self.motorTurn(True, False, True, False)
     elif ( 'stop' in self.path):
       self.motorTurn(False, False, False, False)
       
