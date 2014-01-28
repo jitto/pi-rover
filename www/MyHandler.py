@@ -1,17 +1,9 @@
 import SimpleHTTPServer
 import urlparse
 import RPi.GPIO as GPIO
+import time
 
-class MyHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
-
-  def motorTurn(self, pin8, pin10, pin16, pin18):
-    GPIO.output(16,pin16)
-    GPIO.output(18, pin18)
-    GPIO.output(11,pin8)
-    GPIO.output(15, pin10)
-      
-  def __init__(self, request, client_address, server):
-    SimpleHTTPServer.SimpleHTTPRequestHandler.__init__(self, request, client_address, server)
+def initMotor():
     GPIO.setmode(GPIO.BOARD)
     GPIO.setup(16, GPIO.OUT)
     GPIO.setup(18, GPIO.OUT)
@@ -20,7 +12,14 @@ class MyHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
     motorTurn(True, False, True, False)
     time.sleep(.1)
     motorTurn(False, False, False, False)
-  
+
+def motorTurn(pin8, pin10, pin16, pin18):
+    GPIO.output(16,pin16)
+    GPIO.output(18, pin18)
+    GPIO.output(11,pin8)
+    GPIO.output(15, pin10)
+
+class MyHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
   def do_GET(self):
 
     parsedParameters = urlparse.urlparse(self.path)
@@ -33,21 +32,16 @@ class MyHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
 
   def processMyRequest(self, query):
     print query
-    
     if ( 'forward' in self.path ):            
-      self.motorTurn(True, False, True, False)
+      motorTurn(True, False, True, False)
     elif ( 'backward' in self.path ):     
-      self.motorTurn(False, True, False, True)
+      motorTurn(False, True, False, True)
     elif ( 'left' in self.path ):
-      self.motorTurn(False, True, True, False)
-      time.sleep(.1)
-      self.motorTurn(True, False, True, False)
+      motorTurn(False, True, True, False)
     elif ( 'right' in self.path):
-      self.motorTurn(True, False, False, True)
-      time.sleep(.1)
-      self.motorTurn(True, False, True, False)
+      motorTurn(True, False, False, True)
     elif ( 'stop' in self.path):
-      self.motorTurn(False, False, False, False)
+      motorTurn(False, False, False, False)
       
   
       

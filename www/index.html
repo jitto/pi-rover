@@ -1,39 +1,37 @@
 <!DOCTYPE html>
-<html>
-
-<body>
-
-<h1></h1>
-
-<p><html>
+<html height="100%">
+<head>
 <title>D-Pad.com</title>
-<body>
-<table>
-<tr>
+<style type="text/css">
+html, body {height: 100%; width: 100%;}
+td.rover {background: lightgray}
+</style>
+</head>
+<body onmouseup='moveRover("stop")'>
+<table border="2" bordercolor="white" width="25%" height="15%">
+<colgroup>
+  <col style="width: 33%" />
+  <col style="width: 33%" />
+  <col style="width: 33%" />
+</colgroup>
+<tr align="center">
   <td></td>
-  <td><button id = "button1" onclick='moveRover("forward")'>FORWARD</button></td>
+  <td class="rover" onmousedown='moveRover("forward")'>FORWARD</td>
   <td></td>
 </tr>
-<tr>
-  <td><button id = "button2" onclick='moveRover("left")'>...LEFT...</button></td>
-  <td><button id = "button3" onclick='moveRover("stop")'>...STOP...</button></td>
-  <td><button id = "button4" onclick='moveRover("right")'>...RIGHT...</button></td>
-</tr>
-<tr>
-  <td></td>
-  <td><button id = "button5" onclick='moveRover("backward")'>BACKWARD</button></td>
-  <td></td>
+<tr align="center">
+  <td class="rover" onmousedown='moveRover("left")'>LEFT</td>
+  <td class="rover" onmousedown='moveRover("backward")'>BACK</td>
+  <td class="rover" onmousedown='moveRover("right")'>RIGHT</td>
 </tr>
 </table>
-<div id = "div1"></div>
+</div>
 </body>
 <script language=javascript>
- 
  function moveRover(direction){
- xmlhttp = new XMLHttpRequest();
-  xmlhttp.open("GET","rover/" + direction);
-  xmlhttp.send();
- 
+   xmlhttp = new XMLHttpRequest();
+   xmlhttp.open("GET","rover/" + direction);
+   xmlhttp.send();
  }
 </script>
-</html><html>
+</html>

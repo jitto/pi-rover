@@ -1,10 +1,12 @@
 
 import SocketServer
 import MyHandler
+from MyHandler import initMotor
 
-PORT = 8000
+PORT = 80
 
 Handler = MyHandler.MyHandler
+initMotor()
 
 httpd = SocketServer.TCPServer(("", PORT), Handler)
 
