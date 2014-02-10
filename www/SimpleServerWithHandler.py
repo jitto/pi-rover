@@ -12,3 +12,9 @@ httpd = SocketServer.TCPServer(("", PORT), Handler)
 
 print "serving at port", PORT
 httpd.serve_forever()
+
+#todo forward right and left
+#speed control
+#camera - record
+#live camera
+#touch controls

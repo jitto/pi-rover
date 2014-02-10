@@ -2,6 +2,7 @@ import SimpleHTTPServer
 import urlparse
 import RPi.GPIO as GPIO
 import time
+from subprocess import call
 
 def initMotor():
     GPIO.setmode(GPIO.BOARD)
@@ -42,6 +43,6 @@ class MyHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
       motorTurn(True, False, False, True)
     elif ( 'stop' in self.path):
       motorTurn(False, False, False, False)
-      
-  
-      
+    elif ( 'camera' in self.path ):
+      call(["raspistill", "-t", "10", "-o", "test.jpg"])
+ 

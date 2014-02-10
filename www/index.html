@@ -3,11 +3,19 @@
 <head>
 <title>D-Pad.com</title>
 <style type="text/css">
+* {
+     user-select: none;
+    -khtml-user-select: none;
+    -o-user-select: none;
+    -moz-user-select: -moz-none;
+    -webkit-user-select: none;
+}
 html, body {height: 100%; width: 100%;}
 td.rover {background: lightgray}
 </style>
 </head>
-<body onmouseup='moveRover("stop")'>
+<body background ="test.jpg" bgproperties="fixed" onmouseup='moveRover("stop")' ontouchend='moveRover("stop")'>
+<center>
 <table border="2" bordercolor="white" width="25%" height="15%">
 <colgroup>
   <col style="width: 33%" />
@@ -16,22 +24,30 @@ td.rover {background: lightgray}
 </colgroup>
 <tr align="center">
   <td></td>
-  <td class="rover" onmousedown='moveRover("forward")'>FORWARD</td>
+  <td class="rover" onmousedown='moveRover("forward")' ontouchstart='moveRover("forward")'>FORWARD</td>
   <td></td>
 </tr>
 <tr align="center">
-  <td class="rover" onmousedown='moveRover("left")'>LEFT</td>
-  <td class="rover" onmousedown='moveRover("backward")'>BACK</td>
-  <td class="rover" onmousedown='moveRover("right")'>RIGHT</td>
+  <td class="rover" onmousedown='moveRover("left")' ontouchstart='moveRover("left")'>LEFT</td>
+  <td class="rover" onmousedown='moveRover("backward")' ontouchstart='moveRover("backward")'>BACK</td>
+  <td class="rover" onmousedown='moveRover("right")' ontouchstart='moveRover("right")'>RIGHT</td>
 </tr>
 </table>
 </div>
+</center>
+<button onclick='Onclick()'>camera</button>
 </body>
 <script language=javascript>
+xmlhttp = new XMLHttpRequest();
+
  function moveRover(direction){
-   xmlhttp = new XMLHttpRequest();
    xmlhttp.open("GET","rover/" + direction);
    xmlhttp.send();
- }
+ };
+
+ function Onclick() {
+   xmlhttp.open("GET","rover/camera");
+   xmlhttp.send();
+ };
 </script>
 </html>
