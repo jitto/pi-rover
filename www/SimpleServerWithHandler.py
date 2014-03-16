@@ -1,4 +1,3 @@
-
 import SocketServer
 import MyHandler
 from MyHandler import initMotor
@@ -13,8 +12,8 @@ httpd = SocketServer.TCPServer(("", PORT), Handler)
 print "serving at port", PORT
 httpd.serve_forever()
 
-#todo forward right and left
-#speed control
+#todo forward right and left (This one)
+#speed control (speed control next)
 #camera - record
 #live camera
 #touch controls
