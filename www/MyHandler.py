@@ -1,24 +1,24 @@
 import SimpleHTTPServer
 import urlparse
-import RPi.GPIO as GPIO
+from webiopi import GPIO
 import time
 from subprocess import call
 
 def initMotor():
-    GPIO.setmode(GPIO.BOARD)
-    GPIO.setup(16, GPIO.OUT)
-    GPIO.setup(18, GPIO.OUT)
-    GPIO.setup(11, GPIO.OUT)
-    GPIO.setup(15, GPIO.OUT)
-    motorTurn(True, False, True, False)
+    GPIO.setFunction(17, GPIO.PWM)
+    GPIO.setFunction(22, GPIO.PWM)
+    GPIO.setFunction(23, GPIO.PWM)
+    GPIO.setFunction(24, GPIO.PWM)
+    motorTurn(0.2, 0, 0.2, 0)
     time.sleep(.1)
-    motorTurn(False, False, False, False)
+    motorTurn(0, 0, 0, 0)
 
-def motorTurn(pin8, pin10, pin16, pin18):
-    GPIO.output(16,pin16)
-    GPIO.output(18, pin18)
-    GPIO.output(11,pin8)
-    GPIO.output(15, pin10)
+def motorTurn(right1, right2, left1, left2):
+    GPIO.pulseRatio(17, right1)
+    GPIO.pulseRatio(22, right2)
+    GPIO.pulseRatio(23, left1)
+    GPIO.pulseRatio(24, left2)
+
 
 class MyHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
   def do_GET(self):
@@ -34,15 +34,15 @@ class MyHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
   def processMyRequest(self, query):
     print query
     if ( 'forward' in self.path ):            
-      motorTurn(True, False, True, False)
+      motorTurn(0.8, 0, 0.9, 0)
     elif ( 'backward' in self.path ):     
-      motorTurn(False, True, False, True)
+      motorTurn(0, 0.4, 0, 0.5)
     elif ( 'left' in self.path ):
-      motorTurn(False, True, True, False)
+      motorTurn(0.4, 0, 0.8, 0)
     elif ( 'right' in self.path):
-      motorTurn(True, False, False, True)
+      motorTurn(0.8, 0, 0.4, 0)
     elif ( 'stop' in self.path):
-      motorTurn(False, False, False, False)
+      motorTurn(0, 0, 0, 0)
     elif ( 'camera' in self.path ):
       call(["raspistill", "-t", "10", "-o", "test.jpg"])
  
