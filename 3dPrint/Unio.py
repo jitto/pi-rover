@@ -50,10 +50,10 @@ class Unio:
     for byteIndex in range (0, len(bytes)):
       byte = bytes[byteIndex]
       for bitIndex in range(0, 8):
-        self.rwbit(byte & 0x80)
+        self.writeBit(byte & 0x80)
         byte << 1
-      self.rwbit(end and ((byteIndex + 1) == len(bytes)))
-    return self.readBit()
+      self.writeBit(not (end and ((byteIndex + 1) == len(bytes))))
+      self.readBit() #check SAK for each byte sent
 
   def read(self, length):
     result = []
@@ -61,27 +61,31 @@ class Unio:
       data = 0
       self.setInput()
       for bitIndex in range (0, 8):
-        data = (data << 1) | self.rwbit(1)
-      self.setOutput()
+        data = (data << 1) | self.readBit(1)
+      self.writeBit(not (byteIndex + 1 == len(bytes)))
       self.readBit()
+      self.setOutput()
       result.append(data)
+    return result
 
-  def rwbit(self, bit):
+  def writeBit(self, bit):
     self.setBus(not bit)
     usleep(self.UNIO_QUARTER_BIT)
-    a = self.readBus();
     usleep(self.UNIO_QUARTER_BIT)
     self.setBus(bit)
     usleep(self.UNIO_QUARTER_BIT)
-    b = self.readBus()
     usleep(self.UNIO_QUARTER_BIT)
-    return b and not a
 
   def readBit(self):
     self.setInput()
-    b = self.rwbit(1)
+    usleep(self.UNIO_QUARTER_BIT)
+    a = self.readBus();
+    usleep(self.UNIO_QUARTER_BIT)
+    usleep(self.UNIO_QUARTER_BIT)
+    b = self.readBus()
+    usleep(self.UNIO_QUARTER_BIT)
     self.setOutput()
-    return b
+    return b and not a
 
   def readBus(self):
     return GPIO.input(17) 
