@@ -1,6 +1,15 @@
 import time
 import RPi.GPIO as GPIO
 
+#10kbps to 100kbps - 100us to 10us
+#needs pull up resister
+
+#standby pulse - set to out and high for 600ms - back to low
+#start header - short low pulse followed by header byte - 0x55 - followed by acknowledge sequence (MAK and SAK) - no slave responds during SAK time
+#device address - 8 or 12 bit - 4 bits family code and 4 or 8 device code (no SAK for first device address byte - if using 2 byte address)
+#command READ 0x03
+#eeprom memory address - 16 bit - high byte first
+
 def usleep(microSeconds):
   time.sleep(microSeconds/1000000)
 
