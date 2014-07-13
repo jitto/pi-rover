@@ -26,8 +26,8 @@ class Unio:
     return self.read(length)
 
   def standbyPulse(self):
-    self.setBus(0)
     self.setOutput()
+    self.setBus(0)
     usleep(self.UNIO_TSS + self.UNIO_FUDGE_FACTOR)
     self.setBus(1)
     usleep(self.UNIO_TSTBY + self.UNIO_FUDGE_FACTOR)
